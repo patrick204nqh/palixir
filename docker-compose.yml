@@ -1,0 +1,39 @@
+version: "3"
+
+
+services:
+  phoenix:
+    image: patrick204nqh/palixir:latest
+    container_name: palixir-phoenix
+    stdin_open: true
+    tty: true
+    env_file: .env
+    ports:
+      - 4000:4000
+    volumes:
+      - ./:/var/www/backend
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14
+    container_name: palixir-postgres
+    environment:
+      POSTGRES_DB: $DATABASE_NAME
+      POSTGRES_USER: $DATABASE_USER
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+    ports:
+      - 5432:5432
+    volumes:
+      - palixir_data:/var/lib/postgresql/data
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: palixir-mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+
+volumes:
+  palixir_data:
