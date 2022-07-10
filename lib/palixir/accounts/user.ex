@@ -137,4 +137,11 @@ defmodule Palixir.Accounts.User do
       add_error(changeset, :current_password, "is not valid")
     end
   end
+  
+  @doc false
+  def changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email, :confirmed_at])
+    |> validate_required([:email])
+  end
 end
