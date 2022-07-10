@@ -89,4 +89,9 @@ defmodule PalixirWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
   end
+  
+  scope "/admin", PalixirWeb.Admin, as: :admin do
+    pipe_through :browser
+    resources "/users", UserController
+  end
 end
